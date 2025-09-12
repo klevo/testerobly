@@ -1,9 +1,9 @@
 # testerobly
 
-Listen for file changes a Ruby MiniTest tests.
-Pause and skip during git operations like checkout.
-Run all tests with Enter.
-Fast, simple and resource efficient.
+* Listen for file changes and run matching Ruby MiniTest tests. Works well with Rails and Ruby projects that use [MiniTest](https://github.com/minitest/minitest).
+* Pause and skip during git operations like checkout.
+* Run all tests with Enter.
+* Fast, simple and resource efficient.
 
 ## Development
 
