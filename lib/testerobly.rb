@@ -2,15 +2,15 @@
 
 require "listen"
 
-PAUSE_SECONDS = 5
-QUEUE = Thread::Queue.new
-TEST_COMMAND = %(bin/rails test)
-
 module Testerobly
   class Main
+    PAUSE_SECONDS = 5
+    TEST_COMMAND = %(bin/rails test)
+
     def initialize
       log "testerobly starting"
 
+      @queue = Thread::Queue.new
       @pause_until = Time.now
 
       file_listener = Listen.to(Dir.getwd, relative: true, ignore!: %r{git/HEAD}) do |modified, added|
@@ -22,7 +22,7 @@ module Testerobly
 
       loop do
         sleep 0.5
-        if item = QUEUE.shift
+        if item = @queue.shift
           capture_input_thread.kill
           log item[:message]
           system item[:command]
@@ -57,7 +57,7 @@ module Testerobly
       if tests.any?
         command = "#{TEST_COMMAND} #{tests.join " "}"
         message = "#{changes.join ", "} => #{tests.join ", "}"
-        QUEUE << Hash[command:, message:]
+        @queue << Hash[command:, message:]
       end
     end
 
@@ -71,7 +71,7 @@ module Testerobly
       Thread.new do
         loop do
           if [ "\r", "\n" ].include?($stdin.getc)
-            QUEUE << { command: "#{TEST_COMMAND}:all", message: "rails test:all" }
+            @queue << { command: "#{TEST_COMMAND}:all", message: "rails test:all" }
           end
         end
       end
