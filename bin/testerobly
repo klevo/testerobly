@@ -2,4 +2,4 @@
 
 require "testerobly"
 
-Testeribly::Main.new
+Testerobly::Main.new

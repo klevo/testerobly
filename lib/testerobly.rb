@@ -2,39 +2,21 @@
 
 require "listen"
 
+PAUSE_SECONDS = 5
 QUEUE = Thread::Queue.new
 TEST_COMMAND = %(bin/rails test)
 
-module Testeribly
+module Testerobly
   class Main
     def initialize
-      file_listener = Listen.to(Dir.getwd, relative: true) do |modified, added|
-        next if git_working?
+      log "testerobly starting"
 
-        changes = modified + added
-        # puts "Changes: #{changes}"
-        next if changes.empty?
+      @pause_until = Time.now
 
-        tests = []
-
-        changes.each do |path|
-          case path
-          when /^app\/(channels|controllers|helpers|jobs|models)\/.*\.rb$/
-            result = path.gsub %r{^app/(.+)\.rb$}, 'test/\1_test.rb'
-            tests << result if File.exist?(result)
-          when /^test\/.*_test\.rb$/
-            tests << path
-          end
-        end
-
-        if tests.any?
-          command = "#{TEST_COMMAND} #{tests.join " "}"
-          message = "#{changes.join ", "} => #{tests.join ", "}"
-          QUEUE << Hash[command:, message:]
-        end
+      file_listener = Listen.to(Dir.getwd, relative: true, ignore!: %r{git/HEAD}) do |modified, added|
+        process_changes modified, added
       end
 
-      log "testerobly starting"
       file_listener.start
       capture_input_thread = capture_input
 
@@ -46,6 +28,36 @@ module Testeribly
           system item[:command]
           capture_input_thread = capture_input
         end
+      end
+    end
+
+    def process_changes(modified, added)
+      changes = modified + added
+      return if changes.empty?
+
+      if changes.include?(".git/HEAD") || changes.include?(".git/logs/HEAD") || changes.include?(".git/index")
+        log "git checkout detected, pausing for #{PAUSE_SECONDS}s"
+        @pause_until = Time.now + PAUSE_SECONDS
+      end
+
+      return if @pause_until > Time.now
+
+      tests = []
+
+      changes.each do |path|
+        case path
+        when /^app\/(channels|controllers|helpers|jobs|models)\/.*\.rb$/
+          result = path.gsub %r{^app/(.+)\.rb$}, 'test/\1_test.rb'
+          tests << result if File.exist?(result)
+        when /^test\/.*_test\.rb$/
+          tests << path
+        end
+      end
+
+      if tests.any?
+        command = "#{TEST_COMMAND} #{tests.join " "}"
+        message = "#{changes.join ", "} => #{tests.join ", "}"
+        QUEUE << Hash[command:, message:]
       end
     end
 
@@ -63,10 +75,6 @@ module Testeribly
           end
         end
       end
-    end
-
-    def git_working?
-      File.exist?(".git/index.lock")
     end
   end
 end
