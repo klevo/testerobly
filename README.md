@@ -19,6 +19,4 @@ ruby -Ilib/ bin/testerobly
 
 ## TODO
 
-- [ ] Sample app/ files and tests for that.
-- [ ] Way to test the git checkout pause functionality.
 - [ ] Ability to configure additional matchings.
