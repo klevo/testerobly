@@ -1,12 +1,32 @@
 # frozen_string_literal: true
 
 require "listen"
+require "testerobly/configuration"
 
 module Testerobly
+  class << self
+    attr_accessor :configuration
+  end
+
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
+
+  def self.configure
+    yield(configuration)
+  end
+
+  def self.load_external_config
+    config_file = File.expand_path("config/testerobly.rb", Dir.pwd)
+    load config_file if File.exist?(config_file)
+  end
+
   class Main
     PAUSE_SECONDS = 5
-    # TEST_COMMAND = %(bin/rails test)
-    TEST_COMMAND = "ruby"
+
+    def configuration
+      Testerobly::configuration
+    end
 
     def initialize
       log "testerobly starting"
@@ -61,7 +81,7 @@ module Testerobly
       tests.uniq!
 
       if tests.any?
-        command = "#{TEST_COMMAND} #{tests.join " "}"
+        command = sprintf configuration.test_command, tests.join(" ")
         message = "#{changes.join ", "} => #{tests.join ", "}"
         @queue << Hash[command:, message:]
       end
@@ -72,12 +92,12 @@ module Testerobly
     end
 
     def capture_input
-      log "[Enter] rails test:all"
+      log "[Enter] #{configuration.test_all_command}"
 
       Thread.new do
         loop do
           if [ "\r", "\n" ].include?($stdin.getc)
-            @queue << { command: "#{TEST_COMMAND}:all", message: "rails test:all" }
+            @queue << { command: configuration.test_all_command, message: configuration.test_all_command }
           end
         end
       end

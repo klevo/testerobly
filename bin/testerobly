@@ -2,4 +2,5 @@
 
 require "testerobly"
 
+Testerobly.load_external_config
 Testerobly::Main.new
