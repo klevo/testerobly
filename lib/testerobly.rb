@@ -46,6 +46,9 @@ module Testerobly
 
       changes.each do |path|
         case path
+        when /^lib\/.*\.rb$/
+          result = path.gsub %r{^lib/(.+)\.rb$}, 'test/\1_test.rb'
+          tests << result if File.exist?(result)
         when /^app\/(channels|controllers|helpers|jobs|models)\/.*\.rb$/
           result = path.gsub %r{^app/(.+)\.rb$}, 'test/\1_test.rb'
           tests << result if File.exist?(result)
