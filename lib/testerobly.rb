@@ -5,7 +5,8 @@ require "listen"
 module Testerobly
   class Main
     PAUSE_SECONDS = 5
-    TEST_COMMAND = %(bin/rails test)
+    # TEST_COMMAND = %(bin/rails test)
+    TEST_COMMAND = "ruby"
 
     def initialize
       log "testerobly starting"
@@ -56,6 +57,8 @@ module Testerobly
           tests << path
         end
       end
+
+      tests.uniq!
 
       if tests.any?
         command = "#{TEST_COMMAND} #{tests.join " "}"
