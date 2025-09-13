@@ -1,12 +1,12 @@
 # testerobly
 
-* Listen for file changes and run matching Ruby MiniTest tests. 
+* Listen for file changes and run matching tests. 
 * Works with [MiniTest](https://github.com/minitest/minitest) out of the box. 
 * Can be configured with custom commands to run individual and all tests.
 * Can be configured with custom matchers, matching changed files to specific tests.
 * Pause and skip during git operations like checkout.
 * Run all tests with Enter.
-* Fast, simple and resource efficient.
+* Fast, simple, stable and resource efficient.
 
 ## Installation
 
