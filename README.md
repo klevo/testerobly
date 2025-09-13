@@ -22,6 +22,9 @@ Then bundle:
 
 ```sh
 bundle install
+
+# Recommended: adds bin/testerobly so you don't have to invoke it with "bundle exec testerobly"
+bundle binstub testerobly
 ```
 
 ### Rails specific configuration
@@ -45,6 +48,20 @@ end
 ```
 
 You can use the above configuration for other types of projects, not just Rails.
+
+## Usage
+
+From your projects root directory run:
+
+```sh
+bundle exec testerobly
+# OR if you installed the binstub
+bin/testerobly
+```
+
+Appropriate tests will be run once you edit files. Press Enter to run the all tests command you configured.
+
+Happy testing!
 
 ## Development
 
