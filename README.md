@@ -16,7 +16,3 @@ bundle
 # Run commands with dev code
 ruby -Ilib/ bin/testerobly
 ```
-
-## TODO
-
-- [ ] Ability to configure additional matchings.
