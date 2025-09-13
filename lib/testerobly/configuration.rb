@@ -2,7 +2,7 @@
 
 module Testerobly
   class Configuration
-    attr_accessor :test_command, :test_all_command
+    attr_accessor :test_command, :test_all_command, :on_change
 
     def initialize
       @test_command = "bin/test %s"

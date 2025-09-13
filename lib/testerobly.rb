@@ -78,6 +78,10 @@ module Testerobly
         when /^test\/.*_test\.rb$/
           tests << path
         end
+
+        if configuration.on_change.kind_of?(Proc)
+          configuration.on_change.call path, tests
+        end
       end
 
       tests.uniq!
