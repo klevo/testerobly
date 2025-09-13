@@ -57,7 +57,7 @@ module Testerobly
       return if changes.empty?
 
       if changes.include?(".git/HEAD") || changes.include?(".git/logs/HEAD") || changes.include?(".git/index")
-        log "git checkout detected, pausing for #{PAUSE_SECONDS}s"
+        log "git operation detected, pausing for #{PAUSE_SECONDS}s"
         @pause_until = Time.now + PAUSE_SECONDS
       end
 
