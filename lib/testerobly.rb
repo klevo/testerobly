@@ -23,10 +23,7 @@ module Testerobly
 
   class Main
     PAUSE_SECONDS = 5
-
-    def configuration
-      Testerobly::configuration
-    end
+    PROCESSING_INTERVAL_SECONDS = 0.5
 
     def initialize
       log "testerobly starting"
@@ -42,7 +39,8 @@ module Testerobly
       capture_input_thread = capture_input
 
       loop do
-        sleep 0.5
+        sleep PROCESSING_INTERVAL_SECONDS
+
         if item = @queue.shift
           capture_input_thread.kill
           log item[:message]
@@ -105,6 +103,10 @@ module Testerobly
           end
         end
       end
+    end
+
+    def configuration
+      Testerobly::configuration
     end
   end
 end
