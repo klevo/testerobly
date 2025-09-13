@@ -49,6 +49,10 @@ module Testerobly
           system item[:command]
           capture_input_thread = capture_input
         end
+      rescue Interrupt
+        capture_input_thread.kill
+        file_listener.stop
+        break
       end
     end
 
