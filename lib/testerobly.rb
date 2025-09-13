@@ -26,8 +26,6 @@ module Testerobly
     PROCESSING_INTERVAL_SECONDS = 0.5
 
     def initialize
-      log "testerobly starting"
-
       @queue = Thread::Queue.new
       @pause_until = Time.now
 
