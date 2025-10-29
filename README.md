@@ -1,6 +1,6 @@
 # testerobly
 
-<img width="1344" height="768" alt="testerobly" src="https://github.com/user-attachments/assets/6ffb2716-4cde-4d0c-8acf-ca2965d31a6b" />
+![testerobly-flat](https://github.com/user-attachments/assets/98bbccec-d535-4aa5-8ad7-8c64b39a6398)
 
 * Listen for file changes and run matching tests. 
 * Works with [MiniTest](https://github.com/minitest/minitest) out of the box. 
