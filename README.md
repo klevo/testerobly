@@ -1,5 +1,7 @@
 # testerobly
 
+<img width="1344" height="768" alt="testerobly" src="https://github.com/user-attachments/assets/6ffb2716-4cde-4d0c-8acf-ca2965d31a6b" />
+
 * Listen for file changes and run matching tests. 
 * Works with [MiniTest](https://github.com/minitest/minitest) out of the box. 
 * Can be configured with custom commands to run individual and all tests.
