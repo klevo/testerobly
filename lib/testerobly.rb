@@ -44,7 +44,7 @@ module Testerobly
 
         if item = @queue.shift
           capture_input_thread.kill
-          log item[:message]
+          log item[:message] unless item[:message].nil?
           system item[:command]
           capture_input_thread = capture_input
         end
@@ -113,7 +113,8 @@ module Testerobly
 
           configuration.keys.each do |label, options|
             if options[:keys].include?(input)
-              @queue << { command: options[:command], message: "#{label} pressed" }
+              log "'#{label}' pressed => #{options[:command]}"
+              @queue << { command: options[:command] }
               break
             end
           end
