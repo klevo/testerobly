@@ -36,7 +36,11 @@ Create `config/testerobly.rb`:
 ```ruby
 Testerobly.configure do |config|
   config.test_command = "bin/rails test %s" # "%s" will be replaced with the test file paths 
-  config.test_all_command = "bin/rails test:all"
+  config.test_all_command = "bin/rails test"
+
+  # Custom shorcuts
+  config.bind "s", "bin/rails test:system"
+  config.bind "greet", "say 'Hi. What a wonderful day!'"
 
   # Optional on-change hook, allowing you to run custom tests when specific file or pattern changes
   # Called for every relative path that changed within your project directory
@@ -62,6 +66,8 @@ bin/testerobly
 ```
 
 Appropriate tests will be run once you edit files. Press Enter to run the all tests command you configured.
+
+If you defined any custom shortcuts using `config.bind`, type in the shortcut and press Enter to execute.
 
 Happy testing!
 
