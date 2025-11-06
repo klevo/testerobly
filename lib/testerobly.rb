@@ -5,6 +5,8 @@ require "io/console"
 require "testerobly/configuration"
 
 module Testerobly
+  ENTER_SYMBOL = "⏎"
+
   class << self
     attr_accessor :configuration
   end
@@ -97,17 +99,17 @@ module Testerobly
     end
 
     def capture_input
-      configuration.keys.each do |label, options|
-        log "[#{label}] #{options[:command]}"
+      configuration.keys.each do |label, command|
+        log "[#{label}#{ENTER_SYMBOL}] #{command}"
       end
 
       Thread.new do
         loop do
-          input = $stdin.getc
+          input = $stdin.gets.strip
 
-          configuration.keys.each do |label, options|
-            if options[:keys].include?(input)
-              @queue << { command: options[:command], message: options[:command] }
+          configuration.keys.each do |label, command|
+            if label == input
+              @queue << { command:, message: command }
               break
             end
           end

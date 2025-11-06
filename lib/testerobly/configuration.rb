@@ -10,16 +10,12 @@ module Testerobly
       @keys = {}
     end
 
-    def bind(label, command, keys = nil)
-      if keys.nil?
-        keys = Array(label)
-      end
-
-      @keys[label] = { command:, keys: }
+    def bind(label, command)
+      @keys[label] = command
     end
 
     def test_all_command=(command)
-      bind "Enter", command, [ "\r", "\n" ]
+      bind "", command
     end
   end
 end

@@ -8,4 +8,5 @@ Testerobly.configure do |config|
   end
 
   config.bind "s", "say Hello" 
+  config.bind "joke", "echo 'This is a funny joke :-)'" 
 end
