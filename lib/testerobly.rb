@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 require "listen"
+require "io/console"
 require "testerobly/configuration"
 
 module Testerobly
+  ENTER_SYMBOL = "⏎"
+
   class << self
     attr_accessor :configuration
   end
@@ -41,7 +44,7 @@ module Testerobly
 
         if item = @queue.shift
           capture_input_thread.kill
-          log item[:message]
+          log item[:message] unless item[:message].nil?
           system item[:command]
           capture_input_thread = capture_input
         end
@@ -96,12 +99,19 @@ module Testerobly
     end
 
     def capture_input
-      log "[Enter] #{configuration.test_all_command}"
+      configuration.keys.each do |label, command|
+        log "[#{label}#{ENTER_SYMBOL}] #{command}"
+      end
 
       Thread.new do
         loop do
-          if [ "\r", "\n" ].include?($stdin.getc)
-            @queue << { command: configuration.test_all_command, message: configuration.test_all_command }
+          input = $stdin.gets.strip
+
+          configuration.keys.each do |label, command|
+            if label == input
+              @queue << { command:, message: command }
+              break
+            end
           end
         end
       end
