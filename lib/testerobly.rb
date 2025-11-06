@@ -4,8 +4,6 @@ require "listen"
 require "io/console"
 require "testerobly/configuration"
 
-EXIT_INPUT = "\u0003"
-
 module Testerobly
   class << self
     attr_accessor :configuration
@@ -105,16 +103,11 @@ module Testerobly
 
       Thread.new do
         loop do
-          input = STDIN.getch
-
-          if input == EXIT_INPUT
-            exit
-          end
+          input = $stdin.getc
 
           configuration.keys.each do |label, options|
             if options[:keys].include?(input)
-              log "'#{label}' pressed => #{options[:command]}"
-              @queue << { command: options[:command] }
+              @queue << { command: options[:command], message: options[:command] }
               break
             end
           end
