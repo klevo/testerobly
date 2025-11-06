@@ -19,7 +19,7 @@ module Testerobly
     end
 
     def test_all_command=(command)
-      bind "Enter", command, keys: [ "\r", "\n" ]
+      bind "Enter", command, [ "\r", "\n" ]
     end
   end
 end

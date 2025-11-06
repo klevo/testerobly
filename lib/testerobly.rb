@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 require "listen"
+require "io/console"
 require "testerobly/configuration"
+
+EXIT_INPUT = "\u0003"
 
 module Testerobly
   class << self
@@ -102,11 +105,18 @@ module Testerobly
 
       Thread.new do
         loop do
-          # configuration.keys.each do |key, command|
-          #   if [ "\r", "\n" ].include?($stdin.getc)
-          #     @queue << { command: configuration.test_all_command, message: configuration.test_all_command }
-          #   end
-          # end
+          input = STDIN.getch
+
+          if input == EXIT_INPUT
+            exit
+          end
+
+          configuration.keys.each do |label, options|
+            if options[:keys].include?(input)
+              @queue << { command: options[:command], message: "#{label} pressed" }
+              break
+            end
+          end
         end
       end
     end
