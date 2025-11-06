@@ -6,4 +6,6 @@ Testerobly.configure do |config|
       tests << "test/custom_on_change.rb"
     end
   end
+
+  config.bind "s", "say Hello" 
 end

@@ -96,13 +96,17 @@ module Testerobly
     end
 
     def capture_input
-      log "[Enter] #{configuration.test_all_command}"
+      configuration.keys.each do |label, options|
+        log "[#{label}] #{options[:command]}"
+      end
 
       Thread.new do
         loop do
-          if [ "\r", "\n" ].include?($stdin.getc)
-            @queue << { command: configuration.test_all_command, message: configuration.test_all_command }
-          end
+          # configuration.keys.each do |key, command|
+          #   if [ "\r", "\n" ].include?($stdin.getc)
+          #     @queue << { command: configuration.test_all_command, message: configuration.test_all_command }
+          #   end
+          # end
         end
       end
     end
