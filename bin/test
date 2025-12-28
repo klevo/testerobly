@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+test_files = if ARGV.empty?
+  Dir["test/**/*_test.rb"]
+else
+  ARGV
+end
+
+if test_files.empty?
+  warn "No test files found."
+  exit 1
+end
+
+exec "ruby", "-Itest", *test_files

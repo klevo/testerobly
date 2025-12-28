@@ -3,24 +3,26 @@ PATH
   specs:
     testerobly (1.1.1)
       listen (~> 3.9.0)
+      logger
 
 GEM
   remote: https://rubygems.org/
   specs:
     ffi (1.17.2)
-    ffi (1.17.2-arm64-darwin)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    logger (1.7.0)
+    minitest (5.27.0)
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
       ffi (~> 1.0)
 
 PLATFORMS
-  arm64-darwin-24
   ruby
 
 DEPENDENCIES
+  minitest (~> 5.0)
   testerobly!
 
 BUNDLED WITH
