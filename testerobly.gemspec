@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name        = "testerobly"
-  spec.version     = "1.1.1"
+  spec.version     = "1.1.2"
   spec.summary     = "Test runner to launch alongside your developer session for immediate feedback"
   spec.description = ""
   spec.authors     = ["Robert Starsi"]
@@ -14,4 +14,7 @@ Gem::Specification.new do |spec|
   spec.executables = %w[ testerobly ]
 
   spec.add_dependency "listen", "~> 3.9.0"
+  spec.add_dependency "logger", "~> 1.7"
+
+  spec.add_development_dependency "minitest", "~> 5.0"
 end
