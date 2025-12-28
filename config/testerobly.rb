@@ -1,6 +1,6 @@
 Testerobly.configure do |config|
-  config.test_command = "ruby %s"
-  config.test_all_command = "echo 'sample test all command'"
+  config.test_command = "bin/test %s"
+  config.test_all_command = "bin/test"
   config.on_change = Proc.new do |path, tests|
     if path == "config/testerobly.rb"
       tests << "test/custom_on_change.rb"
