@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.executables = %w[ testerobly ]
 
   spec.add_dependency "listen", "~> 3.9.0"
-  spec.add_dependency "logger"
 
   spec.add_development_dependency "minitest", "~> 5.0"
+  spec.add_development_dependency "logger", "~> 1.7"
 end
