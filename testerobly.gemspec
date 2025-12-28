@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name        = "testerobly"
-  spec.version     = "1.1.1"
+  spec.version     = "1.1.2"
   spec.summary     = "Test runner to launch alongside your developer session for immediate feedback"
   spec.description = ""
   spec.authors     = ["Robert Starsi"]
